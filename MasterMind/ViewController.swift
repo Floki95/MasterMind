@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite3
 
 class ViewController: UIViewController {
 
@@ -25,6 +26,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     
     @IBOutlet weak var timeLabel: UILabel!
+    
+    
+    @IBOutlet weak var saveButton: UIButton!
+    
     var timer:Timer?
     var timeLeft = 200
     
@@ -34,6 +39,7 @@ class ViewController: UIViewController {
     var colorMaster = [#colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1),#colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1),#colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1),#colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1)]
     var colorTest = [#colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1),#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),#colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1),#colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1)]
     
+     var db: OpaquePointer?
     
     override func viewDidAppear(_ animated: Bool) {
         modeChosen = mode
@@ -42,6 +48,23 @@ class ViewController: UIViewController {
         } else {
             LabelMode.text = "Entraînement trankil"
         }
+        
+        
+        //database part
+        let fileUrl = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("MasterMindDatabase.sqlite")
+        
+        if sqlite3_open(fileUrl.path, &db) != SQLITE_OK{
+            print("Error opening database")
+        }
+        
+        let createTableQuery = "CREATE TABLE IF NOT EXISTS MasterMind (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, score INTEGER, time INTEGER)"
+        
+        if sqlite3_exec(db, createTableQuery, nil, nil, nil) != SQLITE_OK{
+            print("Error create table")
+            return
+        }
+        
+        print("ça va allez")
     }
     
     @objc func onTimerFires()
@@ -80,6 +103,7 @@ class ViewController: UIViewController {
         }
         startButton.setTitle("RESTART !",for: UIControlState.normal)
         startButton.isEnabled = true
+        saveButton.isEnabled = true
     }
     
     func looserTime (){
@@ -90,6 +114,7 @@ class ViewController: UIViewController {
         }
         startButton.setTitle("RESTART !",for: UIControlState.normal)
         startButton.isEnabled = true
+        saveButton.isEnabled = true
     }
     
     func win(){
@@ -106,6 +131,9 @@ class ViewController: UIViewController {
             timer?.invalidate()
             timer = nil
         }
+        
+        saveButton.isEnabled = true
+        
     }
     
     func restart () {
@@ -129,6 +157,31 @@ class ViewController: UIViewController {
             timeLeft = 200
         }
     }
+    
+    @IBAction func saveButtonAction(_ sender: UIButton) {
+        
+        var stmt: OpaquePointer?
+        
+        let insertQuery = "INSERT into MasterMind (name, score, time) VALUES (?, ?, ?)"
+        
+        if sqlite3_prepare(db, insertQuery, -1, &stmt, nil) != SQLITE_OK{
+            print("Error binding query")
+        }
+        
+        let itemPseudo = pseudo as NSString
+        sqlite3_bind_text(stmt, 1, itemPseudo.utf8String, -1, nil)
+        
+        let itemScore = String(turn) as NSString
+        sqlite3_bind_text(stmt, 1, itemScore.utf8String, -1, nil)
+        
+        let itemTime = String(timeLeft) as NSString
+        sqlite3_bind_text(stmt, 1, itemTime.utf8String, -1, nil)
+      
+        if sqlite3_step(stmt) == SQLITE_DONE {
+            print("partie sauvegardé bien")
+        }
+    }
+    
     
     @IBAction func touchButton(_ sender: UIButton) {
         print("touchButton")
@@ -292,5 +345,6 @@ class ViewController: UIViewController {
         
     }
     
+
 }
 
