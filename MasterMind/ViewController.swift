@@ -20,11 +20,16 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var labelScore: UILabel!
     
-    
+    var modeChosen = ""
     var buttonBoardIndex = 0
     var turn = 0
     var colorMaster = [#colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1),#colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1),#colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1),#colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1)]
     var colorTest = [#colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1),#colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),#colorLiteral(red: 0, green: 0.9768045545, blue: 0, alpha: 1),#colorLiteral(red: 0.9994240403, green: 0.9855536819, blue: 0, alpha: 1)]
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        modeChosen = mode
+    }
     
     @IBAction func touchButton(_ sender: UIButton) {
         print("touchButton")
