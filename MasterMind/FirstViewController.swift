@@ -9,10 +9,12 @@
 import UIKit
 
 var mode = ""
+var pseudo = ""
 
 class FirstViewController: UIViewController  {
     
     
+    @IBOutlet weak var pseudoTextField: UITextField!
     
     @IBOutlet weak var Pro: UIButton!
     
@@ -30,6 +32,9 @@ class FirstViewController: UIViewController  {
         performSegue(withIdentifier: "segueTraining", sender: self)
     }
     
+    @IBAction func pseudoAction(_ sender: UITextField) {
+        pseudo = sender.text!
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

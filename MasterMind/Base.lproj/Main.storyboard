@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPo-CI-xKh">
-                                <rect key="frame" x="35" y="223" width="300" height="87"/>
+                                <rect key="frame" x="37" y="385" width="300" height="87"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Pro bien sûr, pour qui me prends-tu?">
@@ -30,7 +30,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nfh-MT-QUI">
-                                <rect key="frame" x="35" y="346" width="300" height="89"/>
+                                <rect key="frame" x="37" y="514" width="300" height="89"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Je suis pas sûr je vais m'entraîner un peu">
@@ -41,8 +41,18 @@
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="segueTraining" id="Sap-BH-XNo"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Pseudo" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="45s-tX-vLX">
+                                <rect key="frame" x="80" y="106" width="221" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="pseudoAction:" destination="pmk-0S-hlJ" eventType="editingDidEnd" id="8pg-is-bPr"/>
+                                </connections>
+                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tu veux tester le MasterMind ?  Pas de soucis, mais en Entraînement ou en Pro ?" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hYm-cc-76B">
-                                <rect key="frame" x="63" y="32" width="248" height="140"/>
+                                <rect key="frame" x="63" y="209" width="248" height="140"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <nil key="textColor"/>
@@ -54,6 +64,7 @@
                     </view>
                     <connections>
                         <outlet property="Pro" destination="iPo-CI-xKh" id="aXy-2X-TNe"/>
+                        <outlet property="pseudoTextField" destination="45s-tX-vLX" id="GfQ-mX-EaN"/>
                         <outlet property="training" destination="nfh-MT-QUI" id="eaf-cD-nvJ"/>
                     </connections>
                 </viewController>
@@ -541,14 +552,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Jb-zQ-Rd7">
-                                <rect key="frame" x="30" y="70" width="98" height="21"/>
+                                <rect key="frame" x="30" y="70" width="176" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6y-x0-RbX">
-                                <rect key="frame" x="221" y="67" width="126" height="27"/>
+                                <rect key="frame" x="221" y="67" width="154" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -559,8 +570,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="LabelMode" destination="5Jb-zQ-Rd7" id="7nD-6w-YAG"/>
                         <outlet property="ViewColorChoice" destination="bqu-tB-tEd" id="ejd-EW-f2P"/>
                         <outlet property="labelScore" destination="f6y-x0-RbX" id="Tlg-1h-RJb"/>
+                        <outlet property="startButton" destination="kQp-hQ-FG0" id="jCc-U2-Jho"/>
+                        <outlet property="timeLabel" destination="f6y-x0-RbX" id="PeA-qt-Bqt"/>
                         <outletCollection property="buttonsBoard" destination="wf9-XQ-TZX" collectionClass="NSMutableArray" id="q2B-fm-Foo"/>
                         <outletCollection property="buttonsBoard" destination="Nat-f8-DNB" collectionClass="NSMutableArray" id="gOz-6G-lK4"/>
                         <outletCollection property="buttonsBoard" destination="XwK-Xk-Cei" collectionClass="NSMutableArray" id="uVy-97-DEI"/>
@@ -621,6 +635,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Sap-BH-XNo"/>
+        <segue reference="iiR-Xl-MoT"/>
     </inferredMetricsTieBreakers>
 </document>
